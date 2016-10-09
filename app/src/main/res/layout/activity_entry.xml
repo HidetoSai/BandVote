@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.potejin.bandvote.MainActivity"
+    android:background="#4e4a4a">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:text="出演するバンドを登録します。"
+            android:textSize="25dp"
+            android:textColor="#ffffff"
+            android:layout_marginTop="44dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="新規バンド登録"
+            android:id="@+id/textView"
+            android:layout_marginTop="44dp"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:layout_below="@+id/editText"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/bandname"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="66dp"
+            android:layout_marginStart="66dp"
+            android:layout_alignRight="@+id/editText"
+            android:layout_alignEnd="@+id/editText"
+            android:textColor="#ffffff"
+            android:singleLine="false"
+            android:password="false"
+            android:enabled="true"
+            android:textIsSelectable="true"
+            android:text="Name" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登録"
+            android:id="@+id/newentry"
+            android:layout_below="@+id/bandname"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="既存バンドから選択"
+            android:id="@+id/textView2"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:layout_marginTop="51dp"
+            android:layout_below="@+id/newentry"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登録"
+            android:id="@+id/oldentry"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/newentry"
+            android:layout_alignStart="@+id/newentry" />
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/oldentry"
+            android:layout_below="@+id/textView2"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/layout"
+                android:layout_below="@+id/textView2"
+                android:layout_alignLeft="@+id/bandname"
+                android:layout_alignStart="@+id/bandname"
+                android:layout_alignRight="@+id/twinentry"
+                android:layout_alignEnd="@+id/twinentry"
+                android:layout_above="@+id/oldentry"></LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

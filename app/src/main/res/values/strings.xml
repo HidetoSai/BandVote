@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BandVote</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_BandVote">バンド投票＠音楽部</string>
+</resources>
