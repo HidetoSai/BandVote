@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Color;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -26,12 +29,11 @@ public class Vote extends AppCompatActivity implements View.OnClickListener {
     static final String DBname_voter = "voter";
     private SQLiteDatabase databaseObject;
     ContentValues contentValObject = new ContentValues();
-    ContentValues contentValObject2 = new ContentValues();
     Cursor cursor;
-    private CheckBox checkbox[] = new CheckBox[30];
-    private CheckBox checked[] = new CheckBox[30];
+    private RadioButton radio[] = new RadioButton[30];
+    private RadioGroup radioGroup;
     private String result_str[] = new String[30];
-    private int i = 0, j = 0, count = 0, votes = 0, vote_num = 1;
+    private int i = 0, j = 0, votes = 0;
     private String debug;
 
     @Override
@@ -48,17 +50,21 @@ public class Vote extends AppCompatActivity implements View.OnClickListener {
         String query_select ="SELECT * FROM entryBand";
         Cursor cursor = databaseObject.rawQuery(query_select, null);
 
+        radioGroup = new RadioGroup(this);
+
         while(cursor.moveToNext()){
             int index_name = cursor.getColumnIndex("name");
             String name = cursor.getString(index_name);
             result_str[i] = name;
-            checkbox[i] = new CheckBox(this);
-            checkbox[i].setText(result_str[i]);
-            checkbox[i].setId(i);
-            checkbox[i].setTextSize(20);
-            view.addView(checkbox[i]);
+            radio[i] = new RadioButton(this);
+            radio[i].setText(result_str[i]);
+            radio[i].setId(i);
+            radio[i].setTextSize(30);
+            radio[i].setTextColor(Color.WHITE);
+            radioGroup.addView(radio[i]);
             i++;
         }
+        view.addView(radioGroup);
 
         cursor.close();
     }
@@ -85,48 +91,20 @@ public class Vote extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.vote) {
-            EditText voter = (EditText)findViewById(R.id.voter);
-            if (voter.length() == 0) {
-                Toast.makeText(getApplicationContext(), "投票者名を入力して下さい", Toast.LENGTH_SHORT).show();
+            int rid = radioGroup.getCheckedRadioButtonId();
+            if(rid == -1) {
+                Toast.makeText(getApplicationContext(), "バンドを1つ選んで下さい", Toast.LENGTH_SHORT).show();
             } else {
-                String votername = voter.getText().toString();
-                cursor = databaseObject.rawQuery("SELECT * FROM " + DBname_voter + " WHERE name = " + "'"+votername+"'", null);
-                if (cursor.moveToFirst()) {
-                    Toast.makeText(getApplicationContext(), "投票者が既に登録されています", Toast.LENGTH_SHORT).show();
-                    cursor.close();
-                } else {
-                    cursor.close();
-                    for (j = 0; j < i; j++) {
-                        checked[j] = (CheckBox) findViewById(j);
-                        if (checked[j].isChecked()) {
-                            count++;
-                        }
-                    }
-                    if (count == 3) {
-                        contentValObject2.put("name", votername);
-                        for (j = 0; j < i; j++) {
-                            checked[j] = (CheckBox) findViewById(j);
-                            if (checked[j].isChecked()) {
-                                String bandname = checked[j].getText().toString();
-                                contentValObject2.put("vote" + vote_num++, bandname);
-                                cursor = databaseObject.rawQuery("SELECT * FROM " + DBname_entryBand + " WHERE name = " + "'"+bandname+"'", null);
-                                cursor.moveToFirst();
-                                int index_vote = cursor.getColumnIndex("votes");
-                                votes = cursor.getInt(index_vote);
-                                contentValObject.put("votes", ++votes);
-                                databaseObject.update(DBname_entryBand, contentValObject, "name = " + "'"+bandname+"'", null);
-                                cursor.close();
-                            }
-                        }
-                        databaseObject.insert(DBname_voter, null, contentValObject2);
-                        Toast.makeText(getApplicationContext(), "投票完了", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "バンドを3つ選んで下さい", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                String bandname = radio[rid].getText().toString();
+                cursor = databaseObject.rawQuery("SELECT * FROM " + DBname_entryBand + " WHERE name = " + "'" + bandname + "'", null);
+                cursor.moveToFirst();
+                int index_vote = cursor.getColumnIndex("votes");
+                votes = cursor.getInt(index_vote);
+                contentValObject.put("votes", ++votes);
+                databaseObject.update(DBname_entryBand, contentValObject, "name = " + "'" + bandname + "'", null);
+                cursor.close();
+                Toast.makeText(getApplicationContext(), "投票完了", Toast.LENGTH_SHORT).show();
             }
-            vote_num = 1;
-            count = 0;
         }
     }
 }

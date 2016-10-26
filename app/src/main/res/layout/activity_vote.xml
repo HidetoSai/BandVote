@@ -27,18 +27,6 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="投票者名"
-            android:textColor="#ffffff"
-            android:textSize="25dp"
-            android:id="@+id/textView3"
-            android:layout_above="@+id/scrollView2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,18 +34,6 @@
             android:id="@+id/vote"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/voter"
-            android:layout_below="@+id/editText"
-            android:layout_alignRight="@+id/editText"
-            android:layout_alignEnd="@+id/editText"
-            android:layout_toRightOf="@+id/textView3"
-            android:layout_toEndOf="@+id/textView3" />
 
         <ScrollView
             android:layout_width="wrap_content"
@@ -69,7 +45,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:fillViewport="false"
-            android:layout_below="@+id/voter">
+            android:layout_below="@+id/editText">
 
             <LinearLayout
                 android:orientation="vertical"
